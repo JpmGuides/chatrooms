@@ -1,0 +1,18 @@
+<div>
+  <p>Bienvenue <%= user.name %> <a href="/logout">Déconnexion</a></p>
+  <div>
+    <% unless conversations.empty? then %>
+        <% conversations.each do |conversation| %>
+            <p><%= conversation.name %></p>
+        <% end %>
+    <% else %>
+        pas de conversations disponible
+    <% end %>
+  </div>
+  <div>
+    <%= form_with(url: "/conversation", method: "POST") do %>
+        <input name="name" type="text" minlength="3" />
+        <input type="submit" />
+    <% end %>
+  </div>
+</div>

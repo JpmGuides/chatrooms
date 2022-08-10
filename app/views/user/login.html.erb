@@ -1,0 +1,9 @@
+<head>
+  <%= csrf_meta_tags %>
+</head>
+<div>
+  <%= form_with(url: "/login", method: "POST") do %>
+    <input name="name" type="text" minlength="3" />
+    <input type="submit" />
+  <% end %>
+</div>
