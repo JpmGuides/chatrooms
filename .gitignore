@@ -101,4 +101,9 @@ yarn-debug.log*
 
 .DS_Store
 .gitattributes
-.ruby-version
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
