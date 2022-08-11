@@ -1,0 +1,38 @@
+.chat{
+    .chat-header{
+        .chat-header-title{
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+        }
+        .chat-header-subtitle{
+        font-size: 1.2rem;
+        color: #fff;
+        }
+    }
+    .chat-messages{
+        .chat-message{
+        margin-bottom: 1rem;
+        .chat-message-content{
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            background-color: #fff;
+            .chat-message-content-text{
+            font-size: 1.2rem;
+            color: #000;
+            }
+        }
+        }
+    }
+    .chat-form{
+        .chat-form-content{
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: #fff;
+        .chat-form-content-text{
+            font-size: 1.2rem;
+            color: #000;
+        }
+        }
+    }
+}
