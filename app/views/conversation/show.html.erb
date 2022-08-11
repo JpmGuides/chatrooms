@@ -1,5 +1,5 @@
 <% content_for(:page_title) { conversation.name } %>
-<div class="chat">
+<div id="chat" class="chat" data-conversation-id="<%= conversation.id %>"> 
   <div id="chat-messages" class="chat-messages">
     <% conversation.messages.order(:created_at).each do |message| %>
     <div class="chat-message"><div class="chat-message-content"><%= message.author.name%>: <div class="chat-message-content-text"><%= message.body %></div></div></div>
