@@ -1,4 +1,5 @@
 class HomeController < ActionController::Base
+    layout "application"
     def index
         unless session[:user_id]
             redirect_to '/login'
