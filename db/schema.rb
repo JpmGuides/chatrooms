@@ -41,8 +41,10 @@ ActiveRecord::Schema.define(version: 2022_08_10_093818) do
 
   create_table "participants", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.integer "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["conversation_id"], name: "index_participants_on_conversation_id"
     t.index ["user_id"], name: "index_participants_on_user_id"
   end
 
@@ -57,5 +59,6 @@ ActiveRecord::Schema.define(version: 2022_08_10_093818) do
   add_foreign_key "medias", "messages"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "participants", column: "author_id"
+  add_foreign_key "participants", "conversations"
   add_foreign_key "participants", "users"
 end
