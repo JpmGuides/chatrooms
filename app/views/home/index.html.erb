@@ -1,18 +1,32 @@
 <div>
   <p>Bienvenue <%= user.name %> <a href="/logout">Déconnexion</a></p>
   <div>
+    <table>
     <% unless conversations.empty? then %>
+    
         <% conversations.each do |conversation| %>
-            <p><%= conversation.name %></p>
+          <tr>
+            <a href="/conversation/<%=conversation.id%>">
+              <div class="conversation">
+                <p><%= conversation.name %></p>
+              </div>  
+            </a>
+          </tr>
         <% end %>
+
     <% else %>
+      <tr>
         pas de conversations disponible
+      </tr>
     <% end %>
   </div>
   <div>
-    <%= form_with(url: "/conversation", method: "POST") do %>
-        <input name="name" type="text" minlength="3" />
-        <input type="submit" />
-    <% end %>
+    <tr>
+      <%= form_with(url: "/conversation", method: "POST") do %>
+          <input required name="name" type="text" minlength="3" placeholder="Nom de la conversation"/>
+          <input type="submit" value="Crér" />
+      <% end %>
+    </tr>
   </div>
+  </table>
 </div>
