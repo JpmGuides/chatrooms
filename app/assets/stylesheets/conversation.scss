@@ -1,4 +1,7 @@
 .chat{
+    max-height: 700px;
+    overflow-y: hidden;
+    width: 50%;
     .chat-header{
         .chat-header-title{
         font-size: 1.5rem;
@@ -11,6 +14,9 @@
         }
     }
     .chat-messages{
+        height: 600px;
+        overflow-y: scroll;
+        word-wrap: break-word;
         .chat-message{
         margin-bottom: 1rem;
         .chat-message-content{

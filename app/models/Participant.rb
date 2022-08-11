@@ -1,6 +1,7 @@
 class Participant < ApplicationRecord
 
-    has_many :user
+    belongs_to :user
+    belongs_to :conversation
     has_many :messages
 
     validates :user, presence: true

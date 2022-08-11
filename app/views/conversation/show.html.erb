@@ -1,21 +1,19 @@
 <% content_for(:page_title) { conversation.name } %>
-<div id="chat" class="chat" data-conversation-id="<%= conversation.id %>"> 
+<div id="chat" class="chat" data-conversation-id="<%= conversation.id %>">
   <div id="chat-messages" class="chat-messages">
     <% conversation.messages.order(:created_at).each do |message| %>
-    <div class="chat-message"><div class="chat-message-content"><%= message.author.name%>: <div class="chat-message-content-text"><%= message.body %></div></div></div>
+    <div class="chat-message">
+      <div class="chat-message-author"><%= message.author.name%></div>
+      <div class="chat-message-content">
+        <div class="chat-message-content-text"><%= message.body %></div>
+      </div>
+    </div>
     <% end %>
-    <div class="chat-message"><div class="chat-message-content">Théo <div class="chat-message-content-text">Coucou</div></div></div>
-    <div class="chat-message"><div class="chat-message-content">Théo <div class="chat-message-content-text">Coucou</div></div></div>
   </div>
   <div class="chat-form">
     <%= form_with(url: "/conversation/#{conversation.id}/message", method:
-    "POST") do %>
-    <input
-      required
-      name="message"
-      type="text"
-      placeholder="Nom de la conversation"
-    />
+    "POST",class:"chat-form-text") do %>
+    <input required name="message" type="text" placeholder="Message" />
     <input type="submit" value="Créer" />
     <% end %>
   </div>

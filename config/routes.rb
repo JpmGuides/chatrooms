@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   post 'login', to: 'user#login'
   get 'logout', to: 'user#logout'
 
-  resources :conversation, only: [:show, :create]
+  resources :conversation, only: [:show, :create] do
+    resources :message, only: [:create]
+  end
 
   match '*path', to: redirect('/'), via: :all
 end
