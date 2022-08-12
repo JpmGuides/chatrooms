@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_10_093818) do
+ActiveRecord::Schema.define(version: 2022_08_12_092901) do
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.integer "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "conversations", force: :cascade do |t|
     t.string "name", null: false
@@ -18,14 +46,14 @@ ActiveRecord::Schema.define(version: 2022_08_10_093818) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "medias", force: :cascade do |t|
-    t.string "name"
+  create_table "media", force: :cascade do |t|
+    t.string "file"
     t.integer "message_id", null: false
     t.integer "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["conversation_id"], name: "index_medias_on_conversation_id"
-    t.index ["message_id"], name: "index_medias_on_message_id"
+    t.index ["conversation_id"], name: "index_media_on_conversation_id"
+    t.index ["message_id"], name: "index_media_on_message_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -55,8 +83,10 @@ ActiveRecord::Schema.define(version: 2022_08_10_093818) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "medias", "conversations"
-  add_foreign_key "medias", "messages"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "media", "conversations"
+  add_foreign_key "media", "messages"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "participants", column: "author_id"
   add_foreign_key "participants", "conversations"

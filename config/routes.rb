@@ -9,6 +9,4 @@ Rails.application.routes.draw do
   resources :conversation, only: [:show, :create] do
     resources :message, only: [:create]
   end
-
-  match '*path', to: redirect('/'), via: :all
 end
