@@ -20,9 +20,10 @@ document.addEventListener("turbolinks:load", () => {
 
         received(data) {
           // Called when there's incoming data on the websocket for this channel
-          console.log(data);
           let chat = document.getElementById("chat-messages");
-          let newNode = chat.querySelector(".chat-message").cloneNode(true);
+          let newNode = document.getElementById('chat-message-exemple').cloneNode(true);
+          newNode.removeAttribute('id');
+          newNode.hidden = false;
           newNode.querySelector(".chat-message-content-text").innerText = data.message;
           newNode.querySelector(".chat-message-author").innerText = data.author;
           chat.appendChild(newNode);
