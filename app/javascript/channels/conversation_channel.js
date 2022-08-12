@@ -20,7 +20,6 @@ document.addEventListener("turbolinks:load", () => {
 
         received(data) {
           // Called when there's incoming data on the websocket for this channel
-          console.log(data.media);
 
           let chat = document.getElementById("chat-messages");
           let newNode = document.getElementById('chat-message-exemple').cloneNode(true);
