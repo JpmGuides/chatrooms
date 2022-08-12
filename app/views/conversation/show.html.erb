@@ -14,7 +14,7 @@
     </div>
     <% conversation.messages.order(:created_at).each do |message| %>
     <div class="chat-message">
-      <div class="chat-message-author"><%= message.author.name%></div>
+      <div class="chat-message-author"><%= message.author.user.name%></div>
       <div class="chat-message-content">
         <div class="chat-message-content-text"><%= message.body %></div>
         <% if message.media %>

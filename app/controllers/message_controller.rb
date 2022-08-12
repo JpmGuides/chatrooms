@@ -30,6 +30,6 @@ class MessageController < ApplicationController
       media_filename = media.file.filename
     end
 
-    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.name, media: {url: media_url, media_is_representable: media_representable, media_filename: media_filename}
+    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.user.name, media: {url: media_url, media_is_representable: media_representable, media_filename: media_filename}
   end
 end
