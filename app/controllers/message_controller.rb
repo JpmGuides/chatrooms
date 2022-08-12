@@ -14,10 +14,14 @@ class MessageController < ApplicationController
                       .first_or_create(user_id: session[:user_id])
 
     
+
+    
     message = conversation.messages.create(body: params[:message], author_id: paricipant.id)
-
+    media = Media.create(message_id: message.id,conversation_id: conversation.id) 
+    media.file.attach(params[:file]) if params[:file]
+    media.save
+    
     ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.name
-
-    redirect_to conversation_path(conversation)
+    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: Rails.application.routes.url_helpers.rails_blob_path(message.media.file, only_path: true), author: "system" if params[:file]
   end
 end
