@@ -6,6 +6,10 @@
       <div class="chat-message-author">exemple</div>
       <div class="chat-message-content">
         <div class="chat-message-content-text">exemple</div>
+        <div class="chat-message-content-media">
+          <img src="" alt="" class="chat-message-content-media-representable"/>
+          <a href="" class="chat-message-content-media-url"></a>
+        </div>
       </div>
     </div>
     <% conversation.messages.order(:created_at).each do |message| %>
@@ -16,7 +20,7 @@
         <% if message.media %>
         <div class="chat-message-content-media">
           <% if message.media.file.representable? %>
-          <img
+          <img 
             src="<%= Rails.application.routes.url_helpers.rails_blob_path(message.media.file,
             only_path: true)%>"
             alt="image"

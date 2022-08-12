@@ -17,11 +17,19 @@ class MessageController < ApplicationController
 
     
     message = conversation.messages.create(body: params[:message], author_id: paricipant.id)
-    media = Media.create(message_id: message.id,conversation_id: conversation.id) 
-    media.file.attach(params[:file]) if params[:file]
-    media.save
-    
-    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.name
-    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: Rails.application.routes.url_helpers.rails_blob_path(message.media.file, only_path: true), author: "system" if params[:file]
+    media_url = nil
+    media_representable = false
+    media_filename = nil
+
+    if params[:file]
+      media = Media.create(message_id: message.id,conversation_id: conversation.id)
+      media.file.attach(params[:file]) 
+      media.save
+      media_url = rails_blob_path(message.media.file, only_path: true) 
+      media_representable = media.file.representable?
+      media_filename = media.file.filename
+    end
+
+    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.name, media: {url: media_url, media_is_representable: media_representable, media_filename: media_filename}
   end
 end
