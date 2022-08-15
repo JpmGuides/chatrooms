@@ -46,14 +46,14 @@ ActiveRecord::Schema.define(version: 2022_08_12_092901) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "media", force: :cascade do |t|
+  create_table "medium", force: :cascade do |t|
     t.string "file"
     t.integer "message_id", null: false
     t.integer "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["conversation_id"], name: "index_media_on_conversation_id"
-    t.index ["message_id"], name: "index_media_on_message_id"
+    t.index ["conversation_id"], name: "index_medium_on_conversation_id"
+    t.index ["message_id"], name: "index_medium_on_message_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 2022_08_12_092901) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "media", "conversations"
-  add_foreign_key "media", "messages"
+  add_foreign_key "medium", "conversations"
+  add_foreign_key "medium", "messages"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "participants", column: "author_id"
   add_foreign_key "participants", "conversations"

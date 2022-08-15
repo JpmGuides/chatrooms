@@ -1,6 +1,6 @@
-class CreateMedia < ActiveRecord::Migration[6.1]
+class CreateMedium < ActiveRecord::Migration[6.1]
   def change
-    create_table :media do |t|
+    create_table :medium do |t|
       t.string :name
       t.references :message, null: false, foreign_key: true
       t.references :conversation, null: false, foreign_key: true
