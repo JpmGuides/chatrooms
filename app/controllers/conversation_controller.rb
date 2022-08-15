@@ -18,13 +18,13 @@ class ConversationController < ActionController::Base
             return
         end
 
-        begin
-            conversation = Conversation.find(params[:id])
-        rescue ActiveRecord::RecordNotFound
-            redirect_back(fallback_location: '/')
-            return
-        end
+        conversation = Conversation.find(params[:id])
 
         render :show, locals: { conversation: conversation, page_title: conversation.name }
+        
+    rescue ActiveRecord::RecordNotFound
+        redirect_back(fallback_location: '/')
+        return
+
     end
 end

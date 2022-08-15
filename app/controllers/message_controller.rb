@@ -12,9 +12,6 @@ class MessageController < ApplicationController
                       .participants
                       .where(user_id: session[:user_id])
                       .first_or_create(user_id: session[:user_id])
-
-    
-
     
     message = conversation.messages.create(body: params[:message], author_id: paricipant.id)
     media_url = nil

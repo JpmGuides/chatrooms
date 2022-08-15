@@ -9,7 +9,6 @@ class HomeController < ActionController::Base
         user = User.find(session[:user_id])
         conversations = Conversation.order(:name)
 
-
         render :index, locals: { user: user, conversations: conversations }
     end
 end
