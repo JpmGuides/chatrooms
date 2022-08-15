@@ -27,19 +27,17 @@ document.addEventListener("turbolinks:load", () => {
           let chat = document.getElementById("chat-messages");
           let newNode = document.getElementById('chat-message-exemple').cloneNode(true);
           let messageContentContainer = newNode.querySelector('.chat-message-content');
-          
 
           newNode.removeAttribute('id');
           newNode.hidden = false;
           newNode.querySelector(".chat-message-content-text").innerText = data.message;
           newNode.querySelector(".chat-message-author").innerText = data.author;
+          let mediaContainer = newNode.querySelector(".chat-message-content-media");
 
           if(data.media){
 
-            let mediaContainer = newNode.querySelector(".chat-message-content-media");
             let mediaSample = newNode.querySelector(".chat-message-content-media-media.sample");
             
-
             data.media.forEach(media => {
               let mediaNode = mediaSample.cloneNode(true);
               let representableMedia = mediaNode.querySelector(".chat-message-content-media-representable");
@@ -64,7 +62,6 @@ document.addEventListener("turbolinks:load", () => {
             messageContentContainer.removeChild(mediaContainer);
           }
           
-
           chat.appendChild(newNode);
         },
       }
