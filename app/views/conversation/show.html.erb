@@ -7,8 +7,14 @@
       <div class="chat-message-content">
         <div class="chat-message-content-text">exemple</div>
         <div class="chat-message-content-media">
-          <img src="" alt="" class="chat-message-content-media-representable"/>
-          <a href="" class="chat-message-content-media-url"></a>
+          <div class="chat-message-content-media-media sample">
+            <img
+              src=""
+              alt=""
+              class="chat-message-content-media-representable"
+            />
+            <a href="" class="chat-message-content-media-url"></a>
+          </div>
         </div>
       </div>
     </div>
@@ -17,28 +23,31 @@
       <div class="chat-message-author"><%= message.author.user.name%></div>
       <div class="chat-message-content">
         <div class="chat-message-content-text"><%= message.body %></div>
-        <% if message.media %>
-        <div class="chat-message-content-media">
-          <% if message.media.file.representable? %>
-          <img 
-            src="<%= Rails.application.routes.url_helpers.rails_blob_path(message.media.file,
-            only_path: true)%>"
-            alt="image"
-          />
-          <% else %> <%= link_to rails_blob_path(message.media.file,
-          disposition: "attachment") do %> <%= message.media.file.filename %> <%end%> <%
-          end %>
-        </div>
-        <% end %>
+        <% if message.medium %> 
+          <% message.medium.each do |media|%>
+              <div class="chat-message-content-media">
+                <% if media.file.representable? %>
+                  <img
+                    src="<%= Rails.application.routes.url_helpers.rails_blob_path(media.file,
+                      only_path: true)%>"
+                    alt="image" loading="lazy"
+                  />
+                <% else %>
+                  <%= link_to rails_blob_path(media.file, disposition:
+                  "attachment") do %> <%= media.file.filename %> <%end%> 
+                <%end %>
+              </div>
+          <%end%> 
+        <%end%>
       </div>
     </div>
     <% end %>
   </div>
   <div class="chat-form">
     <%= form_with(url: "/conversation/#{conversation.id}/message", method:
-    "POST",class:"chat-form-text") do %>
-    <input required name="message" type="text" placeholder="Message" />
-    <input type="file" name="file" />
+    "POST",class:"chat-form-text") do |f| %>
+    <input name="message" type="text" placeholder="Message" />
+    <%= f.file_field :file, :multiple => true%>
     <input type="submit" value="Créer" />
     <% end %>
   </div>

@@ -7,26 +7,33 @@ class MessageController < ApplicationController
       return
     end
 
+    
+
     conversation = Conversation.find(params[:conversation_id])
+
     paricipant = conversation
                       .participants
                       .where(user_id: session[:user_id])
                       .first_or_create(user_id: session[:user_id])
-    
-    message = conversation.messages.create(body: params[:message], author_id: paricipant.id)
-    media_url = nil
-    media_representable = false
-    media_filename = nil
 
+    message_body = nil
+    medium_data=nil
+
+    message_body = params[:message] if params[:message]
+    
+    message = conversation.messages.create(body: message_body, author_id: paricipant.id)
+    
     if params[:file]
-      media = Media.create(message_id: message.id,conversation_id: conversation.id)
-      media.file.attach(params[:file]) 
-      media.save
-      media_url = rails_blob_path(message.media.file, only_path: true) 
-      media_representable = media.file.representable?
-      media_filename = media.file.filename
+      medium_data = Array.new
+      params[:file].each do |file|
+        media = message.attach_media(file: file)
+        medium_data.push({url: rails_blob_path(media.file, only_path: true), representable: media.file.representable?, filename: media.file.filename})
+      end
     end
 
-    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.user.name, media: {url: media_url, media_is_representable: media_representable, media_filename: media_filename}
+    ActionCable.server.broadcast "conversation_channel_#{conversation.id}", message: message.body, author: message.author.user.name, media: medium_data
   end
+
 end
+
+
